@@ -115,10 +115,16 @@ Pull Request는 다음 순서로 진행한다.
 
 ## `main` 보호 기준
 
-새 저장소는 다른 저장소의 ruleset을 자동으로 상속하지 않는다. 저장소 관리자는 기본
-브랜치를 대상으로 저장소 수준 ruleset을 생성하고 이름을 `protect-main`으로 지정한다.
-아래 표는 ruleset 생성 후 도달해야 하는 설정이며, ruleset이 이미 존재한다는 의미가
-아니다.
+새 개발 소스 저장소는 다음 템플릿과 적용 절차를 먼저 확인한다.
+
+- [ruleset JSON 다운로드](https://raw.githubusercontent.com/ajin-scrap-monitoring/.github/main/rulesets/protect-main-source.json)
+- [ruleset 적용 절차](https://github.com/ajin-scrap-monitoring/.github/blob/main/rulesets/README.md)
+
+`New ruleset -> Import a ruleset`에서 위 JSON을 가져온다. 기본 브랜치를 대상으로 하는
+`protect-main` ruleset이 Disabled 상태로 생성된다.
+
+CI와 CodeQL을 먼저 실행하고 저장소별 필수 검사를 등록하는 순서는 적용 절차 문서를
+따른다. 아래 표는 가져오기와 저장소별 설정을 모두 마친 뒤 도달해야 하는 최종 상태다.
 
 | 항목 | 설정 |
 | --- | --- |
@@ -145,11 +151,7 @@ Pull Request는 다음 순서로 진행한다.
 조직 관리자의 예외 권한은 Pull Request 안에서 명시적으로 우회할 때만 사용한다. 조직
 관리자도 `main`에 직접 Push하여 ruleset을 우회하지 않는다.
 
-머지 큐는 사용하지 않는다. 개발 소스 저장소는
-[`protect-main-source.json`](https://github.com/ajin-scrap-monitoring/.github/blob/main/rulesets/protect-main-source.json)을
-가져온 뒤 저장소별 CI 검사를 추가한다. 전체 적용 절차는
-[`rulesets/README.md`](https://github.com/ajin-scrap-monitoring/.github/blob/main/rulesets/README.md)를
-따른다.
+머지 큐는 사용하지 않는다.
 
 조직 공통 `.github` 저장소의 `protect-main`은 문서 검증용 `Community files` 검사에
 맞춘 별도 설정이다. 개발 소스 저장소용 템플릿으로 사용하지 않는다.

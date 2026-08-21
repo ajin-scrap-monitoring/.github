@@ -1,5 +1,9 @@
 # 개발 소스 저장소 ruleset 적용 절차
 
+## 가져오기 파일
+
+[protect-main-source.json 다운로드](https://raw.githubusercontent.com/ajin-scrap-monitoring/.github/main/rulesets/protect-main-source.json)
+
 ## 구성 요소
 
 이 절차는 다음 3개 구성 요소를 설정한다.
@@ -9,7 +13,6 @@
 3. 보안 분석을 실행하는 CodeQL
 
 `protect-main-source.json`은 공개 개발 소스 저장소에서 사용하는 가져오기용 템플릿이다.
-조직 공통 `.github` 저장소의 실제 ruleset을 복사한 파일이 아니다.
 
 ## 템플릿 범위
 
