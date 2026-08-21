@@ -10,4 +10,5 @@
 6. 공통 Pull Request 템플릿을 작성한다.
 7. 검토와 필수 검증을 완료한 뒤 Pull Request를 병합한다.
 
-`main`에 직접 Push하거나 force push하지 않는다. 공개 저장소에는 공개 가능한 내용만 포함하고, 보안 문제는 `SECURITY.md`의 절차로 보고한다.
+`main`에 직접 Push하거나 force push하지 않는다. 공개 저장소에는 공개 가능한 내용만
+포함하고, 보안 문제는 `SECURITY.md`의 절차로 보고한다.
