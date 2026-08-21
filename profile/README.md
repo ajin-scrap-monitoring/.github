@@ -17,3 +17,9 @@ LiDAR와 카메라를 활용하여 스크랩의 적재 상태를 측정하고 �
 반영한다.
 
 개발 저장소는 구현 범위가 확정되는 순서에 따라 이 조직에 추가한다.
+
+## 협업 규칙
+
+저장소 운영, 브랜치, Pull Request, CI와 릴리스의 공통 규칙은
+[`GOVERNANCE.md`](https://github.com/ajin-scrap-monitoring/.github/blob/main/GOVERNANCE.md)에서
+확인한다.
