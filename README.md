@@ -7,6 +7,7 @@
 | 경로 | 역할 |
 | --- | --- |
 | `profile/README.md` | 조직 공개 프로필 |
+| `GOVERNANCE.md` | 조직 개발 저장소 공통 운영 규칙 |
 | `PULL_REQUEST_TEMPLATE.md` | 조직 저장소의 기본 Pull Request 템플릿 |
 | `CONTRIBUTING.md` | 공통 기여 절차 |
 | `SECURITY.md` | 보안 문제 보고 절차 |

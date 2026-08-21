@@ -1,6 +1,9 @@
 # 기여 절차
 
 대상 저장소에 별도 `CONTRIBUTING.md`가 있으면 해당 문서를 우선한다.
+조직 공통 운영 규칙은
+[`GOVERNANCE.md`](https://github.com/ajin-scrap-monitoring/.github/blob/main/GOVERNANCE.md)에서
+확인한다.
 
 1. 필요한 경우 구현 또는 수정할 작업을 Issue로 정의한다.
 2. 최신 `main`을 기준으로 작업 브랜치를 생성한다.
