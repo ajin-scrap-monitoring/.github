@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security report
+    url: https://github.com/ajin-scrap-monitoring/.github/blob/main/SECURITY.md
+    about: 보안 취약점은 공개 Issue를 만들기 전에 보안 보고 절차를 확인한다.
