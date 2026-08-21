@@ -23,3 +23,6 @@ jobs:
 
       - name: Validate Issue templates
         run: ruby .github/scripts/validate_issue_templates.rb
+
+      - name: Validate ruleset JSON
+        run: jq empty rulesets/*.json

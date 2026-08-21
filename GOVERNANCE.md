@@ -2,9 +2,12 @@
 
 ## 적용 범위
 
-이 문서는 `ajin-scrap-monitoring` GitHub 조직이 소유한 공개 개발 저장소의 공통
-운영 규칙이다. 대상 저장소에 별도 운영 규칙이 있으면 해당 저장소의 특수한 요구만
-추가하며, 공개 범위와 보안 원칙은 이 문서를 따른다.
+이 문서는 `ajin-scrap-monitoring` GitHub 조직이 소유한 공개 개발 저장소에 적용하는
+최소 운영 기준이다. 각 저장소는 사용하는 언어, CI 검사와 릴리스 산출물처럼 해당
+저장소에만 필요한 규칙을 자체 문서에 추가할 수 있다.
+
+저장소별 문서는 이 문서의 공개 범위와 보안 기준을 완화하거나 대체하지 않는다. 공통
+기준을 변경해야 하면 이 문서를 Pull Request로 수정한다.
 
 개발 소스 코드는 조직 소유의 공개 저장소에서 관리한다. 조직 프로필과 공개 저장소를
 프로젝트의 공개 개발 창구로 사용한다.
@@ -110,12 +113,17 @@ Pull Request는 다음 순서로 진행한다.
 승인 수는 병합 조건으로 강제하지 않는다. 팀원이 코드 대화 또는 `Request changes`로
 문제를 제기하면 해당 문제를 해결하고 모든 대화를 완료한 뒤 병합한다.
 
-## `main` 보호 규칙
+## `main` 보호 기준
 
-각 저장소는 기본 브랜치를 대상으로 `protect-main` ruleset을 Active 상태로 설정한다.
+새 저장소는 다른 저장소의 ruleset을 자동으로 상속하지 않는다. 저장소 관리자는 기본
+브랜치를 대상으로 저장소 수준 ruleset을 생성하고 이름을 `protect-main`으로 지정한다.
+아래 표는 ruleset 생성 후 도달해야 하는 설정이며, ruleset이 이미 존재한다는 의미가
+아니다.
 
 | 항목 | 설정 |
 | --- | --- |
+| Ruleset name | `protect-main` |
+| Enforcement status | Active |
 | Bypass actor | Organization admin |
 | Bypass mode | Pull requests only |
 | Target branch | Default branch |
@@ -127,12 +135,24 @@ Pull Request는 다음 순서로 진행한다.
 | Allowed merge methods | Squash |
 | Require status checks to pass | 사용 |
 | Require branches to be up to date before merging | 사용 |
+| Do not require status checks on creation | 사용하지 않음 |
+| Require code scanning results | 사용 |
+| Code scanning tool | CodeQL |
+| Security alerts threshold | High or higher |
+| Alerts threshold | Errors |
 | Block force pushes | 사용 |
 
 조직 관리자의 예외 권한은 Pull Request 안에서 명시적으로 우회할 때만 사용한다. 조직
 관리자도 `main`에 직접 Push하여 ruleset을 우회하지 않는다.
 
-머지 큐는 사용하지 않는다.
+머지 큐는 사용하지 않는다. 개발 소스 저장소는
+[`protect-main-source.json`](https://github.com/ajin-scrap-monitoring/.github/blob/main/rulesets/protect-main-source.json)을
+가져온 뒤 저장소별 CI 검사를 추가한다. 전체 적용 절차는
+[`rulesets/README.md`](https://github.com/ajin-scrap-monitoring/.github/blob/main/rulesets/README.md)를
+따른다.
+
+조직 공통 `.github` 저장소의 `protect-main`은 문서 검증용 `Community files` 검사에
+맞춘 별도 설정이다. 개발 소스 저장소용 템플릿으로 사용하지 않는다.
 
 ## CI와 코드 분석
 
@@ -141,11 +161,16 @@ CI (Continuous Integration, 지속적 통합)는 Pull Request와 `main` 변경�
 정의하고 ruleset의 필수 상태 검사로 등록한다.
 
 Pull Request는 최신 `main`을 반영한 상태에서 필수 검사를 다시 통과해야 한다. 실제로
-실행되어 GitHub에 보고된 검사만 필수 상태 검사로 등록한다.
+실행되어 GitHub에 보고된 검사만 필수 상태 검사로 등록한다. 필수 검사 이름은 저장소마다
+달라질 수 있으므로 개발 소스 저장소용 ruleset 템플릿에는 포함하지 않는다.
 
 실행 소스 코드가 있는 저장소는 CodeQL을 구성하고 `Require code scanning results`를
 사용한다. 보안 경고 임계값은 `High or higher`, 일반 경고 임계값은 `Errors`로 설정한다.
 CodeQL 분석 결과가 한 번 보고된 뒤 ruleset에 등록한다.
+
+개발 소스 저장소용 ruleset 템플릿은 CodeQL 규칙을 포함하되 Disabled 상태로 제공한다.
+CI와 CodeQL 결과가 GitHub에 보고되고 필수 검사 이름을 등록한 뒤 Active 상태로
+전환한다.
 
 조직 공통 `.github` 저장소는 문서 검증 CI의 `Community files` 검사를 필수 상태 검사로
 사용한다. 실행 소스 코드가 없으므로 CodeQL 검사는 요구하지 않는다.

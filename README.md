@@ -11,6 +11,7 @@
 | `PULL_REQUEST_TEMPLATE.md` | 조직 저장소의 기본 Pull Request 템플릿 |
 | `CONTRIBUTING.md` | 공통 기여 절차 |
 | `SECURITY.md` | 보안 문제 보고 절차 |
+| `rulesets/` | 개발 소스 저장소용 ruleset 템플릿과 적용 절차 |
 | `.github/ISSUE_TEMPLATE/` | 기본 Bug 및 Feature Issue 양식 |
 | `.github/workflows/validate-community-files.yml` | 공통 문서 검증 CI |
 | `.github/scripts/validate_issue_templates.rb` | Issue 양식의 YAML 검증 |
@@ -25,3 +26,4 @@
 | --- | --- | --- |
 | `actions/checkout@v6` | GitHub Actions 실행 환경의 저장소 체크아웃 | MIT |
 | `markdownlint-cli2@0.23.2` | Markdown 문법과 형식 검사 | MIT |
+| `jq` | ruleset JSON 문법 검사 | MIT |
