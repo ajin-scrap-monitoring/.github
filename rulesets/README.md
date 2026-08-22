@@ -1,70 +1,53 @@
-# 개발 소스 저장소 ruleset 적용 절차
+# 개발 소스 Repository ruleset 적용 절차
+
+## 적용 범위
+
+이 문서는 [Governance](../GOVERNANCE.md)의 ruleset 보호 기준을 개발 소스 Repository에
+적용하는 순서를 규정한다. 최종 운영 설정은 Governance에서 관리하고 JSON은 해당 설정을
+반복 적용하기 위한 가져오기용 템플릿으로 사용한다.
+
+네 JSON은 가져오는 순간 보호 규칙이 적용되지 않도록 Disabled 상태로 제공한다.
 
 ## 가져오기 파일
 
-[protect-main-source.json 다운로드](https://raw.githubusercontent.com/ajin-scrap-monitoring/.github/main/rulesets/protect-main-source.json)
+| Ruleset | Target | JSON |
+| --- | --- | --- |
+| `protect-main` | Default branch | [protect-main-source.json 다운로드](https://raw.githubusercontent.com/ajin-scrap-monitoring/.github/main/rulesets/protect-main-source.json) |
+| `require-ci` | Default branch | [require-ci-source.json 다운로드](https://raw.githubusercontent.com/ajin-scrap-monitoring/.github/main/rulesets/require-ci-source.json) |
+| `require-codeql` | Default branch | [require-codeql-source.json 다운로드](https://raw.githubusercontent.com/ajin-scrap-monitoring/.github/main/rulesets/require-codeql-source.json) |
+| `protect-release-tags` | `refs/tags/v*` | [protect-release-tags-source.json 다운로드](https://raw.githubusercontent.com/ajin-scrap-monitoring/.github/main/rulesets/protect-release-tags-source.json) |
 
-## 구성 요소
+## `protect-main` 적용 순서
 
-이 절차는 다음 3개 구성 요소를 설정한다.
+1. `Settings -> General -> Pull Requests`에서 Squash 병합을 허용하고 Merge와 Rebase
+   병합을 허용하지 않도록 설정한다.
+2. `Settings -> Rules -> Rulesets`로 이동한다.
+3. `New ruleset -> Import a ruleset`을 선택하고 `protect-main-source.json`을 가져온다.
+4. Enforcement status를 Active로 변경하고 ruleset을 생성한다.
 
-1. 공통 브랜치 보호 규칙을 담은 `protect-main-source.json`
-2. 저장소별 빌드, 린트, 타입 검사와 테스트를 실행하는 CI
-3. 보안 분석을 실행하는 CodeQL
+## `require-ci` 적용 순서
 
-`protect-main-source.json`은 공개 개발 소스 저장소에서 사용하는 가져오기용 템플릿이다.
+1. 최신 `main`에서 CI 작업 브랜치를 생성한다.
+2. 작업 브랜치에 `main` 대상 Pull Request와 `main` Push에서 실행되는 CI 워크플로우를 작성한다.
+3. CI 워크플로우에 Repository에 필요한 빌드, 린트, 타입 검사와 테스트를 구성한다.
+4. 워크플로우 내 job의 `name`을 `CI`로 설정하고 전체 job을 생략하는 경로 필터와 조건문을 사용하지 않는다.
+5. `Settings -> Rules -> Rulesets`로 이동한다.
+6. `New ruleset -> Import a ruleset`에서 `require-ci-source.json`을 가져온다.
+7. Enforcement status를 Active로 변경하고 ruleset을 생성한다.
+8. CI 작업 브랜치를 Push하고 `main` 대상 Pull Request를 생성하여 첫 `CI`를 실행한다.
+9. 대화와 필수 검사를 완료한 뒤 Squash 방식으로 병합한다.
 
-## 템플릿 범위
+[선택 사항] `CI` Check Run이 보고된 뒤 Expected source를 GitHub Actions로 변경한다.
 
-템플릿에는 다음 설정이 포함되어 있다.
+## `require-codeql` 적용 순서
 
-- 기본 브랜치 대상
-- 브랜치 삭제와 force push 차단
-- 선형 이력과 Pull Request 요구
-- 승인 필수 수 0
-- 대화 해결 요구
-- Squash 병합만 허용
-- CodeQL 결과 요구
-- 초기 상태 Disabled
+1. `Settings -> Advanced Security -> CodeQL analysis`에서 Default setup을 활성화한다.
+2. `Settings -> Rules -> Rulesets`로 이동한다.
+3. `New ruleset -> Import a ruleset`에서 `require-codeql-source.json`을 가져온다.
+4. Enforcement status를 Active로 변경하고 ruleset을 생성한다.
 
-템플릿에는 저장소별 필수 상태 검사 이름을 포함하지 않는다. 필수 상태 검사 이름은
-저장소의 CI가 GitHub에서 한 번 실행된 뒤 확인하여 추가한다.
+## `protect-release-tags` 적용 순서
 
-## 적용 전 저장소 설정
-
-새 저장소의 `Settings -> General -> Pull Requests`에서 다음 값을 설정한다.
-
-| 항목 | 설정 |
-| --- | --- |
-| Allow squash merging | 사용 |
-| Allow merge commits | 사용하지 않음 |
-| Allow rebase merging | 사용하지 않음 |
-| Allow auto-merge | 사용하지 않음 |
-| Automatically delete head branches | 사용 |
-
-## 적용 순서
-
-1. 저장소의 CI 워크플로우를 추가한다.
-2. 저장소에서 CodeQL 기본 설정 또는 CodeQL 워크플로우를 구성한다.
-3. 작업 브랜치와 Pull Request에서 CI와 CodeQL을 한 번 실행한다.
-4. 저장소의 `Settings -> Rules -> Rulesets`로 이동한다.
-5. `New ruleset -> Import a ruleset`을 선택한다.
-6. `protect-main-source.json`을 가져온다.
-7. 이름이 `protect-main`, 대상이 Default branch, 상태가 Disabled인지 확인한다.
-8. `Require status checks to pass`를 추가한다.
-9. 해당 저장소에서 실제로 실행된 CI 검사 이름을 필수 상태 검사로 등록한다.
-10. `Require branches to be up to date before merging`을 사용한다.
-11. CodeQL의 Security alerts가 High or higher, Alerts가 Errors인지 확인한다.
-12. ruleset을 Active 상태로 저장한다.
-13. 시험 Pull Request로 직접 Push 차단, 최신 브랜치 요구, 필수 CI, CodeQL과 Squash
-    병합을 확인한다.
-
-CI 또는 CodeQL 결과가 아직 GitHub에 보고되지 않았다면 ruleset을 Active로 전환하지
-않는다. 필수 도구가 구성되지 않은 상태에서 CodeQL 규칙을 활성화하면 Pull Request
-병합이 차단된다.
-
-## 문서 저장소
-
-실행 소스 코드가 없는 문서 저장소에는 이 템플릿을 사용하지 않는다. 해당 저장소에
-실제로 존재하는 문서 검증 CI를 기준으로 별도 ruleset을 생성하며 CodeQL을 요구하지
-않는다.
+1. `Settings -> Rules -> Rulesets`로 이동한다.
+2. `New ruleset -> Import a ruleset`에서 `protect-release-tags-source.json`을 가져온다.
+3. Enforcement status를 Active로 변경하고 ruleset을 생성한다.
