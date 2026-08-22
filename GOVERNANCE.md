@@ -68,14 +68,23 @@ Public Repository에 Push하기 전에 전체 Git 이력과 변경 파일에서 
 
 ## Issue와 작업 관리
 
-1. 대상 Repository의 Issues에서 작업에 맞는 Issue template을 선택하고 작업 목적과 필요한
-   이유를 작성하여 Issue를 생성한다.
-2. Issue 오른쪽 사이드바의 Projects에서 `Scrap Monitoring Development`를 선택한다.
-3. Project에 추가된 Issue의 상태를 Todo로 설정한다.
-4. 작업을 시작할 때 담당자를 지정하고 Project 상태를 In Progress로 변경한다.
+### Issue 생성과 Project 등록
+
+1. 대상 Repository의 `Issues -> New issue`로 이동한다.
+2. 작업에 맞는 Issue template의 `Get started`를 선택하고 작업 목적과 필요한 이유를 작성하여
+   Issue를 생성한다.
+3. 생성한 Issue 오른쪽 사이드바의 `Projects`에서 `Scrap Monitoring Development`를 선택한다.
+4. `Projects`에 표시된 `Status`를 `Todo`로 설정한다.
+
+### Issue 처리
+
+1. Issue 오른쪽 사이드바의 `Assignees`에서 작업 담당자를 선택한다.
+2. `Projects`에 표시된 `Status`를 `In Progress`로 변경한다.
+3. 브랜치와 커밋 규칙에 따라 작업 브랜치를 생성하고 변경과 검증을 완료한다.
+4. 작업 브랜치를 Push하고 기본 브랜치 대상 Pull Request를 생성한다.
 5. Pull Request 본문에 `Closes #이슈번호`를 작성한다.
-6. Pull Request가 기본 브랜치에 병합되면 GitHub가 Issue를 닫고 Project 상태를 Done으로
-   변경한다.
+6. 대화와 필수 검증을 완료하고 Squash 방식으로 병합한다.
+7. GitHub가 Issue를 닫고 `Status`를 `Done`으로 변경했는지 확인한다.
 
 ## 기본 설정
 
@@ -127,15 +136,6 @@ Push할 수 있으며 후속 커밋을 계속 추가할 수 있다.
 
 작업 브랜치의 변경은 `main`을 대상으로 한 Pull Request로 병합한다. 로컬 변경이나 작업
 브랜치를 원격 `main`에 직접 Push하지 않는다.
-
-Pull Request는 다음 순서로 진행한다.
-
-1. 최신 `main`에서 작업 브랜치를 생성한다.
-2. 작업 브랜치에서 변경하고 검증한다.
-3. 작업 브랜치를 원격 Repository에 Push한다.
-4. Pull Request를 생성하고 관련 Issue를 연결한다.
-5. 대화와 필수 검증을 완료한다.
-6. Squash 방식으로 `main`에 병합한다.
 
 승인 수는 병합 조건으로 강제하지 않는다. 팀원이 코드 대화 또는 Request changes로
 문제를 제기하면 해당 문제를 해결하고 모든 대화를 완료한 뒤 병합한다.
