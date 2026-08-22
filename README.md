@@ -22,8 +22,13 @@
 
 ## CI 의존성
 
-| 의존성 | 사용 목적 | 라이선스 |
-| --- | --- | --- |
-| `actions/checkout@v6` | GitHub Actions 실행 환경의 저장소 체크아웃 | MIT |
-| `markdownlint-cli2@0.23.2` | Markdown 문법과 형식 검사 | MIT |
-| `jq` | ruleset JSON 문법 검사 | MIT |
+| 의존성 | 버전 | 사용 목적 | 출처 | 라이선스 |
+| --- | --- | --- | --- | --- |
+| `actions/checkout` | `v6` | GitHub Actions 실행 환경의 저장소 체크아웃 | [GitHub](https://github.com/actions/checkout) | MIT |
+| `markdownlint-cli2` | `0.23.2` | Markdown 문법과 형식 검사 | [npm](https://www.npmjs.com/package/markdownlint-cli2) | MIT |
+| `jq` | GitHub-hosted runner 제공 버전 | ruleset JSON 문법 검사 | [공식 사이트](https://jqlang.org/) | MIT |
+
+## 이용 조건
+
+이 저장소는 조직 운영 문서와 템플릿의 검토 및 참고를 위해 공개하며 별도 라이선스를
+부여하지 않는다.
