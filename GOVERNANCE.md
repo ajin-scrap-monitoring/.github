@@ -68,16 +68,14 @@ Public Repository에 Push하기 전에 전체 Git 이력과 변경 파일에서 
 
 ## Issue와 작업 관리
 
-구현, 오류 수정, 문서 변경과 설정 변경은 필요한 경우 Issue로 정의한다. Issue에는 작업
-목적과 필요한 이유를 기록하고 담당자를 지정한다.
-
-Organization Project는 여러 Repository의 열린 Issue를 통합 관리한다. 새 Repository는 Project의
-Auto-add to project 대상에 등록하고 `is:issue is:open` 필터를 사용한다. Pull Request는
-별도 Project 항목으로 추가하지 않는다.
-
-Project에 추가된 Issue의 초기 상태는 Todo로 설정하고 작업을 시작하면 In Progress로
-변경한다. Pull Request 본문의 `Closes #이슈번호`가 기본 브랜치에 병합되면 GitHub가
-연결된 Issue를 닫고 Project 상태를 Done으로 변경한다.
+1. 대상 Repository의 Issues에서 작업에 맞는 Issue template을 선택하고 작업 목적과 필요한
+   이유를 작성하여 Issue를 생성한다.
+2. Issue 오른쪽 사이드바의 Projects에서 `Scrap Monitoring Development`를 선택한다.
+3. Project에 추가된 Issue의 상태를 Todo로 설정한다.
+4. 작업을 시작할 때 담당자를 지정하고 Project 상태를 In Progress로 변경한다.
+5. Pull Request 본문에 `Closes #이슈번호`를 작성한다.
+6. Pull Request가 기본 브랜치에 병합되면 GitHub가 Issue를 닫고 Project 상태를 Done으로
+   변경한다.
 
 ## 기본 설정
 
