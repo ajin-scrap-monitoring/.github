@@ -94,6 +94,7 @@ Project에 추가된 Issue의 초기 상태는 Todo로 설정하고 작업을 �
 | General -> Pull Requests | Allow rebase merging | 사용하지 않음 |
 | General -> Pull Requests | Allow auto-merge | 사용하지 않음 |
 | General -> Pull Requests | Automatically delete head branches | 사용 |
+| Advanced Security | Private vulnerability reporting | Enabled |
 | Advanced Security | CodeQL | Default setup |
 
 ### Organization 설정
