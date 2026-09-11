@@ -42,6 +42,44 @@ Public Repository에는 다음 내용을 포함하지 않는다.
 Public Repository에 Push하기 전에 전체 Git 이력과 변경 파일에서 Private 정보가
 제외되었는지 확인한다.
 
+## GHCR 컨테이너 패키지
+
+Public 개발 소스 Repository가 OCI(Open Container Initiative) 컨테이너 이미지를
+산출하면 GitHub Container Registry (GHCR) Package를 Public으로 제공한다. 소스
+Repository와 GHCR Package의 Visibility는 별개의 설정으로 관리한다.
+
+배포 제한이 있는 외부 코드나 계약상 공개할 수 없는 산출물을 포함해야 하는 구성 요소만
+Private GHCR Package를 사용할 수 있다. 해당 Repository는 Private이 필요한 이유,
+image pull 인증 경계와 배포 영향을 구현 상태의 정본 문서에 기록한다. 현장 설정이나
+자격 증명을 이미지에서 분리할 수 있다는 이유만으로 Package를 Private으로 전환하지
+않는다.
+
+| 항목 | 기준 |
+| --- | --- |
+| 기본 Package Visibility | Public |
+| Private 예외 | 배포 제한과 인증 경계를 Repository 정본 문서에 기록 |
+| Public image pull | 자격 증명 불필요 |
+| Private image pull | 배포 환경에 주입한 read-only 자격 증명 |
+| Image publish | 대상 Repository의 GitHub Actions에 부여한 최소 `packages: write` 권한 |
+| Image 내용 | Public Repository의 Public 범위와 동일 |
+
+컨테이너 이미지에는 현장 규격, 사설 주소, 자격 증명, 운영 설정과 실제 데이터를 포함하지
+않는다. 공개용 기본 설정과 검증 데이터는 Public 사양만으로 만들고 실제 값은 실행 시
+외부에서 제공한다.
+
+GHCR image tag와 배포 참조는 다음 기준을 사용한다.
+
+| 용도 | 형식 |
+| --- | --- |
+| Release version | `vMAJOR.MINOR.PATCH` tag에서 파생한 `MAJOR.MINOR.PATCH` |
+| Source revision | `sha-<full-git-sha>` |
+| 변경 가능한 기본 tag | `latest`를 게시하지 않음 |
+| 배포 참조 | `ghcr.io/<organization>/<image>@sha256:<digest>` |
+
+Release workflow는 원격 `main` 이력에 포함된 version tag의 커밋에서 이미지를 게시한다.
+게시 후 Package Visibility, image tag와 digest를 확인한다. 배포 Repository는 tag가 아닌
+digest로 구성 요소 이미지를 선택한다.
+
 ## 소스 이용 조건
 
 프로젝트 소스 코드에는 별도 라이선스를 부여하지 않는다. 개발 Repository에는 `LICENSE`
