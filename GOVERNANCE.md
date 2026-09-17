@@ -102,9 +102,9 @@ Development와 Validation은 multi-stage Dockerfile의 별도 target 또는 책�
 image로 제공한다. 같은 의존성 정의와 lock file을 사용하고 CI는 로컬과 같은 Validation
 진입 명령을 실행한다.
 
-장기 실행 service는 개발 중 source 변경을 반영할 필요가 있을 때만 bind mount와 hot
-reload를 제공한다. library, 일회성 도구와 배포 Repository에는 hot reload를 요구하지
-않는다.
+개발 중인 코드를 수정하면서 실행 결과를 계속 확인해야 하는 service는 Development
+환경에 source bind mount와 hot reload를 제공한다. 실행 결과를 계속 확인하지 않는
+library, 일회성 도구와 배포 Repository에는 hot reload를 요구하지 않는다.
 
 Dev Container는 선택 사항이다. 제공하는 경우 Development Compose service 또는
 Development image를 재사용하고 의존성과 실행 방법을 별도로 중복 정의하지 않는다.
