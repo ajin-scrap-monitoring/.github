@@ -45,27 +45,39 @@ Public Repository에 Push하기 전에 전체 Git 이력과 변경 파일에서 
 ## Repository 루트 README
 
 개발 Repository의 루트 `README.md`는 처음 방문한 사람이 Repository의 목적과 사용
-방법을 확인하는 진입 문서다. 구성은 필수 블록 4개와 선택 섹션 4개이며 다음 순서를
-사용한다.
+방법을 확인하는 진입 문서다. 구성은 필수 블록 6개와 선택 섹션 4개이며 다음 순서를
+사용한다. 새 Repository는 [README 템플릿](docs/repository-readme-template.md)을 기준으로
+작성한다.
 
 | 순서 | 구성 | 적용 | 내용 |
 | --- | --- | --- | --- |
 | 1 | 제목과 개요 | 필수 | H1 제목, 목적, 사용자와 시스템 내 역할을 1개 또는 2개 문단으로 설명 |
 | 2 | `주요 기능` | 선택 | 대표 기능과 책임 범위 |
-| 3 | `빠른 시작` | 필수 | 사전 조건, 설치와 첫 실행의 최소 명령 |
-| 4 | `설정` | 선택 | 실행에 필요한 설정값과 환경 변수 |
-| 5 | `개발 및 검증` | 선택 | 개발 의존성 설치, 정적 검사와 테스트 명령 |
-| 6 | `배포` | 선택 | 배포 산출물과 배포 문서의 진입점 |
-| 7 | `문서` | 필수 | 현재 사용하는 상세 문서의 링크와 역할 |
-| 8 | `이용 조건` | 필수 | Organization의 소스 이용 조건 |
+| 3 | `사전 조건` | 필수 | 이후 절차에 필요한 Host 도구와 지원 version |
+| 4 | `설정` | 선택 | 첫 실행 전에 준비할 공개 설정과 입력 경로 |
+| 5 | `빠른 시작` | 필수 | Runtime 구성의 첫 실행과 유효 결과 확인 명령 |
+| 6 | `개발 환경` | 선택 | Development 구성, source mount와 hot reload 사용법 |
+| 7 | `개발 및 검증` | 필수 | Validation 구성의 정적 검사, test와 build 검증 명령 |
+| 8 | `배포` | 선택 | 배포 산출물과 배포 문서의 진입점 |
+| 9 | `문서` | 필수 | 현재 사용하는 상세 문서의 링크와 역할 |
+| 10 | `이용 조건` | 필수 | Organization의 소스 이용 조건과 외부 의존성 license 경계 |
 
 필수 블록은 다음 기준을 적용한다.
 
 1. 제목은 제품 또는 구성 요소를 식별할 수 있는 이름으로 작성한다.
 2. 개요는 Repository가 담당하는 기능과 시스템 내 경계를 현재 상태로 설명한다.
-3. `빠른 시작`은 새로 Checkout한 사용자가 첫 유효 결과를 확인할 수 있는 명령만 포함한다.
-4. `문서`는 현재 정본으로 사용하는 문서만 연결하고 각 문서의 역할을 한 줄로 설명한다.
-5. `이용 조건`은 이 문서의 소스 이용 조건에 정의된 문구를 사용한다.
+3. `사전 조건`은 Docker Engine과 Docker Compose plugin을 기본으로 기록하고, image를
+   Host에서 build하면 Docker Buildx도 기록한다. 장비와 운영체제 통합에 필요한 예외
+   의존성은 역할과 적용 범위를 함께 기록한다.
+4. `설정`은 `.env.example`, 공개 config와 secret 입력 경계를 설명한다. 전체 설정 명세와
+   실제 secret은 포함하지 않는다.
+5. `빠른 시작`은 설정을 마친 사용자가 Runtime 구성으로 첫 유효 결과를 확인할 수 있는
+   명령만 포함한다.
+6. `개발 및 검증`은 Repository 루트에서 실행하는 하나의 Container 기반 진입 명령과
+   검증 범위를 설명한다. Host에 프로젝트 언어 runtime 설치를 요구하지 않는다.
+7. `문서`는 현재 정본으로 사용하는 문서만 연결하고 각 문서의 역할을 한 줄로 설명한다.
+8. `이용 조건`은 이 문서의 소스 이용 조건에 정의된 문구와 외부 의존성 license 적용
+   사실을 기록한다.
 
 선택 섹션은 실제 내용이 있을 때만 추가하고 빈 섹션이나 예정된 내용을 위한 자리표시는
 만들지 않는다. 명령은 Repository 루트에서 그대로 실행할 수 있어야 하며 필요한 사전
@@ -74,6 +86,28 @@ Public Repository에 Push하기 전에 전체 Git 이력과 변경 파일에서 
 README에는 상세 설계, 전체 설정값과 운영 절차를 중복하지 않고 정본 문서로 연결한다.
 구현 이력, 작업 진행률과 쉽게 오래되는 상태 설명은 포함하지 않는다. 목차와 배지는
 탐색 또는 검증 상태 확인에 실제로 필요한 경우에만 사용한다.
+
+### Container 실행 환경
+
+Container 기반 Repository는 실행 환경을 다음 책임으로 구분한다.
+
+| 환경 | 책임 | 의존성 범위 |
+| --- | --- | --- |
+| Runtime | 빠른 시작과 배포에서 application 실행 | 실행에 필요한 최소 의존성 |
+| Development | source 수정, debugging과 선택적 hot reload | Runtime 의존성과 개발 도구 |
+| Validation | lint, type 검사, test와 build 검증 | 재현 가능한 전체 검증 도구 |
+
+Runtime image에는 compiler, test 도구, hot reload 도구와 source를 포함하지 않는다.
+Development와 Validation은 multi-stage Dockerfile의 별도 target 또는 책임이 구분된 별도
+image로 제공한다. 같은 의존성 정의와 lock file을 사용하고 CI는 로컬과 같은 Validation
+진입 명령을 실행한다.
+
+장기 실행 service는 개발 중 source 변경을 반영할 필요가 있을 때만 bind mount와 hot
+reload를 제공한다. library, 일회성 도구와 배포 Repository에는 hot reload를 요구하지
+않는다.
+
+Dev Container는 선택 사항이다. 제공하는 경우 Development Compose service 또는
+Development image를 재사용하고 의존성과 실행 방법을 별도로 중복 정의하지 않는다.
 
 ## GHCR 컨테이너 패키지
 

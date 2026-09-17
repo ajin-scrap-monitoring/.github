@@ -13,6 +13,7 @@
 | `CONTRIBUTING.md` | 공통 기여 절차 |
 | `SECURITY.md` | 보안 문제 보고 절차 |
 | `rulesets/` | 개발 소스 Repository용 ruleset 템플릿과 적용 절차 |
+| `docs/repository-readme-template.md` | 개발 Repository 루트 README 작성 템플릿 |
 | `.github/ISSUE_TEMPLATE/` | 기본 Bug 및 Feature Issue 양식 |
 | `.github/workflows/validate-community-files.yml` | 공통 문서 검증 CI |
 | `.github/scripts/validate_issue_templates.rb` | Issue 양식의 YAML 검증 |
